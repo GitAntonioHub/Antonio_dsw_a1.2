@@ -1,9 +1,10 @@
-<?php 
+<?php
 // Recoger datos del formulario
 $correo = $_POST['correo'];
 $modulo = $_POST['modulo'];
 $asunto = $_POST['asunto'];
 $descripcion = $_POST['descripcion'];
+$temas = isset($_POST['temas']) ? $_POST['temas'] : [];
 
 // Array de módulos válidos para 2º DAW
 $modulos_validos = ["DSW", "EIE", "HLC", "DPL", "SRI"];
@@ -21,10 +22,14 @@ function validarModulo($modulo, $modulos_validos) {
     return in_array($modulo, $modulos_validos);
 }
 
-// Función para validar el asunto (máximo 50 caracteres y no puede ser numérico)
-// y la descripción (máximo 300 caracteres)
+// Función para validar el asunto y la descripción
 function validarAsuntoYDescripcion($asunto, $descripcion) {
     return strlen($asunto) <= 50 && !is_numeric($asunto) && strlen($descripcion) <= 300;
+}
+
+// Función para validar los temas seleccionados (entre 1 y 3)
+function validarTemas($temas) {
+    return count($temas) >= 1 && count($temas) <= 3;
 }
 
 // Validar correo
@@ -47,6 +52,11 @@ if (!validarAsuntoYDescripcion($asunto, $descripcion)) {
     }
 }
 
+// Validar temas
+if (!validarTemas($temas)) {
+    $errores[] = "Debe seleccionar entre 1 y 3 temas.";
+}
+
 // Comprobar si hay errores
 if (!empty($errores)) {
     // Mostrar errores y un enlace para volver al formulario
@@ -63,8 +73,11 @@ if (!empty($errores)) {
         mkdir('data');
     }
 
+    // Convertir los temas seleccionados en una cadena entrecomillada y separada por comas
+    $temas_seleccionados = implode(', ', $temas);
+
     $file = fopen('data/dudas.csv', 'a');
-    $line = '"' . implode('";"', [$correo, $modulo, $asunto, $descripcion]) . '"';
+    $line = '"' . implode('";"', [$correo, $modulo, $asunto, $descripcion, $temas_seleccionados]) . '"';
     fwrite($file, $line . "\n");
 
     fclose($file);

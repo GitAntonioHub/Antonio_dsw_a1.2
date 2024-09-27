@@ -25,6 +25,18 @@
         <label for="descripcion">Descripción:</label><br>
         <textarea id="descripcion" name="descripcion" rows="5" cols="30" required></textarea><br><br>
 
+        <label for="temas">Temas relacionados (Seleccione máximo 3 temas):</label><br>
+        <input type="checkbox" name="temas[]" value="Linux"> Linux<br>
+        <input type="checkbox" name="temas[]" value="Windows"> Windows<br>
+        <input type="checkbox" name="temas[]" value="PHP"> PHP<br>
+        <input type="checkbox" name="temas[]" value="HTML"> HTML<br>
+        <input type="checkbox" name="temas[]" value="Javascript"> Javascript<br>
+        <input type="checkbox" name="temas[]" value="Bash"> Bash<br>
+        <input type="checkbox" name="temas[]" value="Calificaciones"> Calificaciones<br>
+        <input type="checkbox" name="temas[]" value="Actividades"> Actividades<br>
+        <input type="checkbox" name="temas[]" value="Exámenes"> Exámenes<br>
+        <input type="checkbox" name="temas[]" value="Otros"> Otros<br><br>
+
         <input type="submit" value="Enviar Duda">
     </form>
 </body>
